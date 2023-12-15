@@ -6,14 +6,14 @@ Loosely based on the great Dirtwave's M8.
 
 ## Motivation
 
-- Tracker
-- Good sound
-- Multi-platform
-- Slick interface (both visual and hardware)
+- Tracker (M8)
+- Good sound (ZynAddSubFX)
+- Multi-platform (Godot)
+- Gamepad Control (M8)
 
 # Notes
 ## Phrase view:
-### note
+### note | degree
 Header can be either `N` for note or `D` for degree.
 - `[*]SCALE` is set globaly but can be applied locally (`*` indicates it's local) - take SC scales
 - `[D] <degree><accidental><octave>`
