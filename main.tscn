@@ -1,3 +1,22 @@
-[gd_scene format=3 uid="uid://cnnfs25ehib8g"]
+[gd_scene load_steps=3 format=3 uid="uid://cnnfs25ehib8g"]
+
+[ext_resource type="FontFile" uid="uid://oo4am7g3hg0" path="res://C64_TrueType_v1.2.1-STYLE/fonts/C64_Pro_Mono-STYLE.ttf" id="1_x87mr"]
+
+[sub_resource type="Theme" id="Theme_ds0oa"]
+default_font = ExtResource("1_x87mr")
 
 [node name="Main" type="Node2D"]
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+offset_right = 1152.0
+offset_bottom = 648.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="CodeEdit" type="CodeEdit" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = SubResource("Theme_ds0oa")
+theme_override_colors/background_color = Color(0, 0, 0, 1)
+text = "ABCDEFHGI
+abcdefghi"
