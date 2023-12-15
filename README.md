@@ -10,6 +10,7 @@ Loosely based on the great Dirtwave's M8.
 - Good sound (ZynAddSubFX)
 - Multi-platform (Godot)
 - Gamepad Control (M8)
+- Arch device (SteamDeck)
 
 # Notes
 ## Phrase view:
