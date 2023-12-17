@@ -13,6 +13,11 @@ var senderIP: String
 var senderPort: int
 enum {OSC_ARG_TYPE_NULL, OSC_ARG_TYPE_FLOAT=102, OSC_ARG_TYPE_INT=105, OSC_ARG_TYPE_STRING=115}
 var observers: Dictionary = Dictionary()
+## ZynAddSubFx continuously sends back an OSC message with the address [code]/active_keys[/code] holding an 
+## array of boolean values indicating if a MIDI key is pressed on the virtual keyboard.
+## This is too verbose for debugging purposes, so it's more convenient to ignore it by default.
+## Set this to [code]false[/code] to print the message to console.
+var ignoreActiveKeysMsg := true
 
 # osc server
 var serverPort: int = 56101 :
@@ -41,6 +46,7 @@ func startServerOn(listenPort: int):
 func _physics_process(_delta):
 	if socketUdp.get_available_packet_count() > 0:
 		var msg := parseOsc(socketUdp.get_packet())
+		if ignoreActiveKeysMsg and msg.addr == "/active_keys": return
 		var sender := "%s/%d" % [socketUdp.get_packet_ip(), socketUdp.get_packet_port()]
 		Log.verbose("OSC message received from %s: %s %s" % [sender, msg.addr, msg.args])
 		osc_msg_received.emit(msg.addr, msg.args, sender)

@@ -15,9 +15,10 @@ func _process(delta):
 func _input(event):
 	if event is InputEventKey and event.pressed:
 		_maxText()
-		match event.keycode:
-			KEY_ENTER: _ignoreEvent()
+		#match event.keycode:
+			#KEY_ENTER: _ignoreEvent()
 			#KEY_TAB: _ignoreEvent()
+			
 
 func _maxText():
 	if get_caret_column() >= maxLength:
