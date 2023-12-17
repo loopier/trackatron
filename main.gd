@@ -8,6 +8,10 @@ var Zyn = preload("res://Zyn.gd")
 var StepEdit = preload("res://StepEdit.gd")
 var zynTypes = Zyn.types
 var stepsPerPhrase = 16
+## Placehoder for an OSC message.
+## ZynAddSubFX OSC API uses very long and complex messages. We want to edit parts
+## without having to write everything.
+var msgBuf := ""
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -96,6 +100,8 @@ func getMsgArgTypes(addr: String) -> Array:
 
 func parseCommand(cmd: String) -> String:
 	var items = cmd.split()
-	var osc = Zyn.commands["objects"][items[0]]
+	var osc = Zyn.commands[items[0]]
 	var arg = items[1]
-	return "%s%s" % [osc, arg]
+	var argIndex = msgBuf.find(osc)
+	msgBuf = "%s%s" % [osc, arg]
+	return msgBuf

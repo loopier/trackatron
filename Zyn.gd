@@ -1,13 +1,18 @@
 class_name Zyn
 static var commands := {
-	"verbs": {},
-	"objects": {
-		"a": "/addpars",
-		"k": "/kit",
-		"p": "/part",
-		"v": "/Voice",
-	}
+	".": "/Panic",
+	"a": "/Amp",
+	"f": "/Freq",
+	"p": "TODO: portamento",
+	"w": ["stpzogdbucrtyqklw"],
+	"x": "/partefx",
+	"A": "/addpars",
+	"O": "/OscilSmp",
+	"P": "/part",
+	"S": ["/adpars","subpars","/padpars"],
+	"V": "/Voice",
 }
+
 static var types := {
 "/Panic": null,
 "/last_xmz": "s",
