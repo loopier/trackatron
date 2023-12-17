@@ -1,5 +1,13 @@
 class_name Zyn
-
+static var commands := {
+	"verbs": {},
+	"objects": {
+		"a": "/addpars",
+		"k": "/kit",
+		"p": "/part",
+		"v": "/Voice",
+	}
+}
 static var types := {
 "/Panic": null,
 "/last_xmz": "s",
@@ -1297,4 +1305,7 @@ static var types := {
 "/presets/delete": "s",
 "/watch/add": "s",
 "/learn": "s",
+
+# replies
+"/part#/kit#/adpars/VoicePar#/OscilSmp/waveform": null,
 }

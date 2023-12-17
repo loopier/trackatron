@@ -21,7 +21,7 @@ size_flags_vertical = 3
 layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("3_ipsqp")
-text = "/part0/Penabled 0"
+text = "/part0/kit0/adpars/VoicePar0/OscilSmp/waveform"
 script = ExtResource("2_r8vxk")
 
 [node name="PhraseEdit" type="CodeEdit" parent="VBoxContainer"]

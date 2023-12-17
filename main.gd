@@ -19,10 +19,10 @@ func _ready():
 	$Timer.start()
 	
 	$VBoxContainer/Prompt.msg_evaluated.connect(_on_msg_evaluated)
-	for step in stepsPerPhrase:
-		var stepEdit = StepEdit.new()
-		stepEdit.name = "step%s" % step
-		$VBoxContainer.add_child(stepEdit)
+	#for step in stepsPerPhrase:
+		#var stepEdit = StepEdit.new()
+		#stepEdit.name = "step%s" % step
+		#$VBoxContainer.add_child(stepEdit)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -91,4 +91,4 @@ func getMsgArgTypes(addr: String) -> Array:
 	regex.compile("\\d")
 	var result = regex.search(addr)
 	if result: addr = addr.replace(result.get_string(), "#")
-	return zynTypes[addr].split()
+	return zynTypes[addr].split() if zynTypes[addr] else []
