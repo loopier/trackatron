@@ -4,7 +4,9 @@ var osc: OscReceiver
 var soundServerOscIp := "127.0.0.1"
 var soundServerOscPort := 4001
 var Zyn = preload("res://Zyn.gd")
+var StepEdit = preload("res://StepEdit.gd")
 var zynTypes = Zyn.types
+var stepsPerPhrase = 16
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -17,6 +19,10 @@ func _ready():
 	$Timer.start()
 	
 	$VBoxContainer/Prompt.msg_evaluated.connect(_on_msg_evaluated)
+	for step in stepsPerPhrase:
+		var stepEdit = StepEdit.new()
+		stepEdit.name = "step%s" % step
+		$VBoxContainer.add_child(stepEdit)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -26,16 +32,17 @@ func _input(event):
 	if not event is InputEventKey: return
 	if event.pressed:
 		match event.keycode:
+			KEY_ESCAPE: sendOsc("/Panic", [])
 			KEY_SPACE:
 				#sendOsc("/noteOn", [0, 60, randi() % 96 + 12])
 				pass
 			KEY_TAB:
 				focusNext()
 				_ignoreEvent()
-	if event.is_released():
-		match event.keycode:
-			KEY_SPACE:
-				sendOsc("/noteOff", [0, 60])
+	#if event.is_released():
+		#match event.keycode:
+			#KEY_SPACE:
+				#sendOsc("/noteOff", [0, 60])
 
 func sendOsc(addr: String, args: Array):
 	#Log.verbose("%s %s" % [addr, args])
@@ -64,12 +71,14 @@ func _on_msg_evaluated(addr: String, args: Array):
 	#Log.verbose("types %s: %s" % [addr, zynTypes[addr]])
 	var parsedArgs := []
 	var types = getMsgArgTypes(addr)
+	args.resize(len(types))
 	for i in len(args):
 		match types[i]:
 			"i": parsedArgs.append(int(args[i]))
 			"f", "d": parsedArgs.append(float(args[i]))
 			"B": parsedArgs.append(bool(int(args[i])))
-			_: parsedArgs.append(args[i])
+			"s": parsedArgs.append(args[i])
+			_: pass
 	for arg in parsedArgs:
 		Log.verbose("types %s:%s" % [arg, typeof(arg)])
 	sendOsc(addr, parsedArgs)
@@ -81,5 +90,5 @@ func getMsgArgTypes(addr: String) -> Array:
 	var regex := RegEx.new()
 	regex.compile("\\d")
 	var result = regex.search(addr)
-	addr = addr.replace(result.get_string(), "#")
+	if result: addr = addr.replace(result.get_string(), "#")
 	return zynTypes[addr].split()

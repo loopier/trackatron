@@ -1,0 +1,7 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://c3rkw1oby5bc5"]
+
+[ext_resource type="FontFile" uid="uid://oo4am7g3hg0" path="res://C64_TrueType_v1.2.1-STYLE/fonts/C64_Pro_Mono-STYLE.ttf" id="1_6djos"]
+
+[resource]
+default_font = ExtResource("1_6djos")
+default_font_size = 16

@@ -17,6 +17,10 @@ Loosely based on the great Dirtwave's M8.
 - customize `CodeEdit` as if it were ncurses.
   - separate columns by spaces
   - navigate columns with shortcuts (either `[SHIFT+]TAB` or vim modes)
+- use modes:
+  - `normal` to navigate
+  - `insert` to edit contents
+  - `visual` to select
 ## Phrase view:
 ### note | degree
 Header can be either `N` for note or `D` for degree.

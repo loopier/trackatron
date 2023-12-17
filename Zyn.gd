@@ -1,6 +1,7 @@
 class_name Zyn
 
 static var types := {
+"/Panic": null,
 "/last_xmz": "s",
 "/part#/kit#/padpars/FreqLfo/paste": "b",
 "/part#/kit#/padpars/FreqLfo/Pfreq": "f",

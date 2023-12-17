@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://dgfrkx41xolww"]
 
 [ext_resource type="FontFile" uid="uid://oo4am7g3hg0" path="res://C64_TrueType_v1.2.1-STYLE/fonts/C64_Pro_Mono-STYLE.ttf" id="1_3j527"]
-[ext_resource type="Script" path="res://step_edit.gd" id="2_mljck"]
+[ext_resource type="Script" path="res://StepEdit.gd" id="2_j6h82"]
 
 [sub_resource type="Theme" id="Theme_vb06k"]
 default_font = ExtResource("1_3j527")
@@ -13,4 +13,4 @@ offset_bottom = 28.0
 theme = SubResource("Theme_vb06k")
 scroll_fit_content_height = true
 draw_spaces = true
-script = ExtResource("2_mljck")
+script = ExtResource("2_j6h82")
