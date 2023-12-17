@@ -161,7 +161,7 @@ func sendMessage(target: String, oscAddr: String, oscArgs: Array):
 	
 	var addrPort := target.split("/")
 	if addrPort.size() == 2:
-		Log.verbose("Replying to %s/%s: %s %s" % [addrPort[0], addrPort[1] as int, oscAddr, oscArgs])
+		#Log.verbose("Replying to %s/%s: %s %s" % [addrPort[0], addrPort[1] as int, oscAddr, oscArgs])
 		socketUdp.set_dest_address(addrPort[0], addrPort[1] as int)
 		socketUdp.put_packet(oscBuf.data_array)
 

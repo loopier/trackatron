@@ -110,7 +110,10 @@ func getMsgArgTypes(addr: String) -> Array:
 	regex.compile("\\d")
 	var result = regex.search(addr)
 	if result: addr = addr.replace(result.get_string(), "#")
-	return zynTypes[addr].split() if zynTypes[addr] else []
+	if zynTypes[addr]:
+		return zynTypes[addr].split()
+	else:
+		return []
 
 func parseCommand(cmd: String) -> String:
 	var items = cmd.split()
