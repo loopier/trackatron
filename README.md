@@ -17,7 +17,8 @@ Loosely based on the great Dirtwave's M8.
 command examples
 ### synth voice
 - play note: `/noteOn 0 60 120`
-- saw wave: `/part0/kit0/adpars/VoicePar0/OscilSmp/Pbasefuncpar 4`
+- saw wave: `/part0/kit0/adpars/VoicePar0/OscilSmp/Pcurrentbasefunc 4`
+- wave shape param: `/part0/kit0/adpars/VoicePar0/OscilSmp/Pbasefuncpar 70`
 
 ## UI
 - customize `CodeEdit` as if it were ncurses.

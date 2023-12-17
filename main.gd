@@ -6,12 +6,16 @@ var soundServerOscIp := "127.0.0.1"
 var soundServerOscPort := 4001
 var Zyn = preload("res://Zyn.gd")
 var StepEdit = preload("res://StepEdit.gd")
+var Routine = preload("res://routine.tscn")
 var zynTypes = Zyn.types
 var stepsPerPhrase = 16
 ## Placehoder for an OSC message.
 ## ZynAddSubFX OSC API uses very long and complex messages. We want to edit parts
 ## without having to write everything.
 var msgBuf := ""
+
+@onready var sequencer : Routine
+@onready var lastNote : int
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -21,7 +25,12 @@ func _ready():
 	osc.startServer()
 	var children = get_children()
 	#OS.execute("zynaddsubfx", ["-P", soundServerOscPort])
-	$Timer.start()
+	sequencer = Routine.instantiate()
+	sequencer.name = "sequencer"
+	sequencer.wait_time = 0.25
+	add_child(sequencer)
+	sequencer.timeout.connect(_on_sequencer_timeout)
+	sequencer.start()
 	
 	$VBoxContainer/Prompt.msg_evaluated.connect(_on_msg_evaluated)
 	#for step in stepsPerPhrase:
@@ -67,8 +76,13 @@ func _ignoreEvent():
 	get_parent().set_input_as_handled()
 
 
-func _on_timer_timeout():
+func _on_sequencer_timeout():
 	#sendOsc("/noteOn", [0, randi() % 127 , 60])
+	#Log.debug("timer: %s" % [sequencer.tick])
+	if sequencer.tick % 2: 
+		lastNote =  randi() % 72 + 36
+		sendOsc("/noteOn", [0, lastNote, randi() % 64 + 36])
+	else: sendOsc("/noteOff", [0, lastNote])
 	pass
 
 func _on_msg_evaluated(addr: String, args: Array):
