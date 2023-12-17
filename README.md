@@ -13,6 +13,12 @@ Loosely based on the great Dirtwave's M8.
 - Arch device (SteamDeck)
 
 # Notes
+## commands
+command examples
+### synth voice
+- play note: `/noteOn 0 60 120`
+- saw wave: `/part0/kit0/adpars/VoicePar0/OscilSmp/Pbasefuncpar 4`
+
 ## UI
 - customize `CodeEdit` as if it were ncurses.
   - separate columns by spaces
