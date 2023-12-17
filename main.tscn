@@ -4,12 +4,14 @@
 [ext_resource type="PackedScene" uid="uid://dgfrkx41xolww" path="res://step_edit.tscn" id="1_jqli8"]
 
 [node name="Main" type="Node2D"]
+visible = false
 script = ExtResource("1_aa2ai")
+
+[node name="Timer" type="Timer" parent="."]
 
 [node name="GridContainer" type="GridContainer" parent="."]
 offset_right = 1152.0
 offset_bottom = 648.0
-size_flags_horizontal = 3
 columns = 6
 
 [node name="StepEditDeg0" parent="GridContainer" instance=ExtResource("1_jqli8")]
@@ -18,3 +20,5 @@ layout_mode = 2
 [node name="StepEditVol0" parent="GridContainer" instance=ExtResource("1_jqli8")]
 layout_mode = 2
 maxLength = 2
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
