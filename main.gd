@@ -1,4 +1,5 @@
 extends Node2D
+class_name Main
 
 var osc: OscReceiver
 var soundServerOscIp := "127.0.0.1"
@@ -92,3 +93,9 @@ func getMsgArgTypes(addr: String) -> Array:
 	var result = regex.search(addr)
 	if result: addr = addr.replace(result.get_string(), "#")
 	return zynTypes[addr].split() if zynTypes[addr] else []
+
+func parseCommand(cmd: String) -> String:
+	var items = cmd.split()
+	var osc = Zyn.commands["objects"][items[0]]
+	var arg = items[1]
+	return "%s%s" % [osc, arg]
