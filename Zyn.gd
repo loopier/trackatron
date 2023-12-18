@@ -85,7 +85,7 @@ class Distortion:
 class Oscillator:
 	var baseFunc := 0
 	var shape := 0
-	var distor := 0
+	var distor := Distortion.new()
 
 class Voice:
 	var amp : VoiceAmp = VoiceAmp.new()
@@ -93,6 +93,7 @@ class Voice:
 	var filter : Filter = Filter.new()
 	var env : Env = Env.new()
 	var lfo : LFO = LFO.new()
+	var oscillator : Oscillator = Oscillator.new()
 
 const numVoices := 8
 var voices := []
