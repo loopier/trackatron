@@ -1,7 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://cnnfs25ehib8g"]
+[gd_scene load_steps=6 format=3 uid="uid://cnnfs25ehib8g"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_aa2ai"]
-[ext_resource type="PackedScene" uid="uid://dgfrkx41xolww" path="res://step_edit.tscn" id="1_jqli8"]
 [ext_resource type="Script" path="res://Prompt.gd" id="2_r8vxk"]
 [ext_resource type="Script" path="res://TrackerEdit.gd" id="3_8cvw0"]
 [ext_resource type="Theme" uid="uid://c3rkw1oby5bc5" path="res://trakatron_theme.tres" id="3_ipsqp"]
@@ -32,16 +31,6 @@ theme = ExtResource("3_ipsqp")
 caret_type = 1
 indent_size = 2
 script = ExtResource("3_8cvw0")
-
-[node name="GridContainer" type="GridContainer" parent="VBoxContainer"]
-visible = false
-layout_mode = 2
-columns = 6
-
-[node name="StepEditDeg0" parent="VBoxContainer/GridContainer" instance=ExtResource("1_jqli8")]
-layout_mode = 2
-theme = ExtResource("3_ipsqp")
-caret_type = 1
 
 [node name="GutTest" type="Node" parent="."]
 script = ExtResource("6_7u2w6")
