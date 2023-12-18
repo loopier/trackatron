@@ -50,7 +50,7 @@ func _input(event):
 				#sendOsc("/noteOn", [0, 60, randi() % 96 + 12])
 				pass
 			KEY_TAB:
-				focusNext()
+				#focusNext()
 				_ignoreEvent()
 	#if event.is_released():
 		#match event.keycode:

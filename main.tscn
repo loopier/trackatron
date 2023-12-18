@@ -28,7 +28,6 @@ script = ExtResource("2_r8vxk")
 layout_mode = 2
 size_flags_vertical = 3
 theme = ExtResource("3_ipsqp")
-caret_type = 1
 indent_size = 2
 script = ExtResource("3_8cvw0")
 

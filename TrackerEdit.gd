@@ -25,6 +25,9 @@ func _process(delta):
 func _input(event):
 	if event is InputEventKey and event.pressed:
 		match event.keycode:
+			KEY_TAB: 
+				moveRight()
+				_ignoreEvent()
 			KEY_RIGHT: moveRight()
 			KEY_LEFT: moveLeft()
 			KEY_ENTER: 
@@ -43,19 +46,14 @@ func moveRight():
 	select(ln, pos, ln, lineText.find(" ", pos))
 
 func moveLeft():
-	# moving backwards goes to the end of the previous word so
-	# we need to move back twice then move forward once
 	var ln := get_caret_line()
 	var lineText := get_line(ln)
 	var pos := get_caret_column()
 	pos = lineText.rfind(" ", get_caret_column())
 	set_caret_column(pos)
-	pos = lineText.rfind(" ", get_caret_column())
-	set_caret_column(pos)
-	#moveRight()
 
 func moveUp():
-	pass
+	set_caret_line(get_caret_line() - 1)
 
 func moveDown():
-	pass
+	set_caret_line(get_caret_line() + 1)
