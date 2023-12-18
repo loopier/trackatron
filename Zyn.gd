@@ -1,5 +1,103 @@
 class_name Zyn
-static var commands := {
+
+const ENV_LIN := false
+const ENV_LOG := true
+const LFO_SINE := 0
+const LFO_TRI := 1
+const LFO_SQUARE := 2
+const LFO_UP := 3
+const LFO_DOWN := 4
+const LFO_EXP1 := 5
+const LFO_EXP2 := 6
+
+class LFO:
+	var freq := 6.49
+	var depth := 0
+	var lp := 127
+	var phase := 64
+	var stretch := 64
+	var delay := 0.0
+	var fadeIn := 0.0
+	var fadeOut := 10.0
+	var ampRand := 0
+	var freqRand := 0
+
+class Env:
+	var atkt := 0.0
+	var atkl := 1.0
+	var dect := 0.13
+	var decl := 0.97
+	var sus := 127
+	var relt := 0.04
+	var stretch := 64
+	var forcedRelease := true
+	var linlog := Zyn.ENV_LOG
+	var repeat := false
+	var shape := Zyn.LFO_SINE
+
+class Amp:
+	var vol := 64
+	var sense := 64
+	var pan := 64
+	var stretch := 64
+	var strength := 0
+	var time := 60
+	var stereo := true
+	var randHarmonics := false
+
+class VoiceAmp extends Amp:
+	var delay := 0
+	var bypassGlobalFilter := false
+	var resonanceEnabled := true
+
+	func _init():
+		sense = 127
+
+class Freq:
+	var fine := 0
+	var coarse := 0
+	var octave := 0
+	var bw := 0
+	var type := 0
+
+class VoiceFreq extends Freq:
+	var equalTemperament := 0
+	var fixed := 0
+
+class Filter:
+	var cutoff := 30313.21
+	var q := 1.08
+	var freqTrack := 0.0
+	var scale := 0
+	var sense := 64
+	var stages := 1
+	var category := 0
+	var type := 0
+	var gain := 0.0
+
+	var env : Env
+	var lfo : LFO
+
+class Distortion:
+	var type := 0
+	var amt := 0
+
+class Oscillator:
+	var baseFunc := 0
+	var shape := 0
+	var distor := 0
+
+class Voice:
+	var amp : VoiceAmp = VoiceAmp.new()
+	var freq : VoiceFreq = VoiceFreq.new()
+	var filter : Filter = Filter.new()
+	var env : Env = Env.new()
+	var lfo : LFO = LFO.new()
+
+const numVoices := 8
+var voices := []
+
+const commands := {
 	".": "/Panic",
 	"a": "/Amp",
 	"f": "/Freq",
@@ -13,7 +111,7 @@ static var commands := {
 	"V": "/Voice",
 }
 
-static var types := {
+const osc := {
 "/Panic": null,
 "/last_xmz": "s",
 "/part#/kit#/padpars/FreqLfo/paste": "b",
@@ -1314,3 +1412,7 @@ static var types := {
 # replies
 "/part#/kit#/adpars/VoicePar#/OscilSmp/waveform": null,
 }
+
+func _init():
+	for i in numVoices:
+		voices.append(Voice.new())

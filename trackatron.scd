@@ -18,3 +18,7 @@ z.sendMsg("/part0/partefx[]", 0, note, rrand(12,72));
 z.sendMsg("/part0/kit0/adpars/VoicePar0/octave", 5);
 OSCFunc.trace(true)
 127.collect(z.sendMsg("/noteOff", 0, _))
+z.sendMsg("/part0/kit0/adpars/VoicePar0/PVolume", 100)
+z.sendMsg("/part0/kit0/adpars/VoicePar0/PVolume")
+z.sendMsg("/noteOn", 0, 60, 100)
+z.sendMsg("/noteOff", 0, 60, 100)

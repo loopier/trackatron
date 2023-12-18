@@ -7,7 +7,6 @@ var soundServerOscPort := 4001
 var Zyn = preload("res://Zyn.gd")
 var StepEdit = preload("res://StepEdit.gd")
 var Routine = preload("res://routine.tscn")
-var zynTypes = Zyn.types
 var stepsPerPhrase = 16
 ## Placehoder for an OSC message.
 ## ZynAddSubFX OSC API uses very long and complex messages. We want to edit parts
@@ -110,8 +109,8 @@ func getMsgArgTypes(addr: String) -> Array:
 	regex.compile("\\d")
 	var result = regex.search(addr)
 	if result: addr = addr.replace(result.get_string(), "#")
-	if zynTypes[addr]:
-		return zynTypes[addr].split()
+	if Zyn.osc[addr]:
+		return Zyn.osc[addr].split()
 	else:
 		return []
 
