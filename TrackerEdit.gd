@@ -1,6 +1,14 @@
 class_name TrackerEdit
 extends CodeEdit
 
+enum Mode {
+	NORMAL,
+	INPUT,
+	VISUAL,
+}
+
+var activeMode := Mode.NORMAL
+
 var cols = [3,2,2,5,5,5]
 var rows = 16
 
@@ -25,7 +33,12 @@ func _process(delta):
 	pass
 
 func _input(event):
+	match activeMode:
+		Mode.NORMAL: _normalModeInput(event)
+
+func _normalModeInput(event):
 	if event is InputEventKey and event.pressed:
+		#deselect()
 		match event.keycode:
 			KEY_TAB: 
 				nextColumn()
@@ -42,6 +55,7 @@ func _input(event):
 				if event.keycode >= KEY_A and event.keycode <= KEY_Z:
 					insertText(event.as_text())
 					_ignoreEvent()
+		#selectSlot()
 
 func _ignoreEvent():
 	# disable the event at the Window level, the hierarchy is (Window.Main.TextEdit.self)
@@ -82,3 +96,13 @@ func prevColumn():
 	var pos := get_caret_column()
 	pos = lineText.rfind(" ", get_caret_column())
 	set_caret_column(pos)
+
+func selectSlot():
+	var ln := get_caret_line()
+	var cl := get_caret_column()
+	var lnText := get_line(ln)
+	var prev := lnText.rfind(" ", cl) + 1
+	var next := lnText.find(" ", cl)
+	if next < 0: next = len(lnText)
+	Log.debug("%s (%s) %s - %s" % [prev, cl, next, lnText.find(" ")])
+	select(ln, prev, ln, next)
