@@ -6,8 +6,9 @@ enum Mode {
 	INPUT,
 	VISUAL,
 }
-
 var activeMode := Mode.NORMAL
+
+var Hex = preload("res://Hex.gd")
 
 var cols = [3,2,2,5,5,5]
 var rows = 16
