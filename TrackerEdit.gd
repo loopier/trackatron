@@ -1,6 +1,8 @@
 class_name TrackerEdit
 extends CodeEdit
 
+var Hex = preload("res://Hex.gd")
+
 enum Mode {
 	NORMAL,
 	INPUT,
@@ -8,10 +10,31 @@ enum Mode {
 }
 var activeMode := Mode.NORMAL
 
-var Hex = preload("res://Hex.gd")
+## represents an instrument parameter grid
+class TrackInstrument:
+	var id := Hex.withDefault(0,2)
+	var voice1 := TrackVoice.new()
+	
+	func asString() -> String:
+		var str := "INST %s\n" % [id.value]
+		str += "%sF" % []
+		str += "V1\t%s\t" % [voice1.asString()]
+		return str
 
-var cols = [3,2,2,5,5,5]
-var rows = 16
+class TrackVoice:
+	var wave := Hex.withDefault(0,1)
+	var filterCutoff := Hex.withDefault(64)
+	
+	func _init():
+		# TODO: add header here?
+		wave.set_header("W")
+		filterCutoff.set_header("")
+	
+	func asString() -> String:
+		var str := "%s %s" % [wave.value, filterCutoff.value]
+		return str
+
+var ins := TrackInstrument.new()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -19,14 +42,7 @@ func _ready():
 	var height : int = get_parent().get_parent().get_viewport_rect().size.y
 	set_custom_minimum_size(Vector2(width, height))
 	
-	for ln in rows:
-		text += "%X " % [ln]
-		for col in cols:
-			for i in col:
-				text += "-"
-			text += " "
-		text = text.substr(0, len(text)-1)
-		text += "\n"
+	text = "%s" % [ins.asString()]
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
