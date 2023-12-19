@@ -16,6 +16,7 @@ func _ready():
 			for i in col:
 				text += "-"
 			text += " "
+		text = text.substr(0, len(text)-1)
 		text += "\n"
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -31,6 +32,8 @@ func _input(event):
 			KEY_RIGHT: moveRight()
 			KEY_LEFT: moveLeft()
 			KEY_ENTER: 
+				select_word_under_caret()
+				var sel = get_selected_text()
 				Log.warn("<ENTER> key is disabled in `TrackerEdit.gd`")
 				_ignoreEvent()
 
@@ -43,7 +46,11 @@ func moveRight():
 	var lineText := get_line(ln)
 	var pos := lineText.find(" ", get_caret_column())
 	set_caret_column(pos)
-	select(ln, pos, ln, lineText.find(" ", pos))
+	#select(ln, pos, ln, lineText.find(" ", pos))
+	#select_word_under_caret()
+	#var word = get_selected_text()
+	#pass
+	
 
 func moveLeft():
 	var ln := get_caret_line()
