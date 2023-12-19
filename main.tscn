@@ -16,6 +16,7 @@ offset_right = 40.0
 offset_bottom = 40.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+theme = ExtResource("3_ipsqp")
 
 [node name="Prompt" type="CodeEdit" parent="VBoxContainer"]
 layout_mode = 2
@@ -28,6 +29,10 @@ script = ExtResource("2_r8vxk")
 layout_mode = 2
 size_flags_vertical = 3
 theme = ExtResource("3_ipsqp")
+theme_override_colors/selection_color = Color(1, 0, 0, 1)
+caret_type = 1
+caret_draw_when_editable_disabled = true
+highlight_current_line = true
 indent_size = 2
 script = ExtResource("3_8cvw0")
 

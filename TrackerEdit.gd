@@ -21,6 +21,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	if get_caret_column() < 2: set_caret_column(2)
 	pass
 
 func _input(event):
@@ -29,14 +30,12 @@ func _input(event):
 			KEY_TAB: 
 				nextColumn()
 				_ignoreEvent()
-			KEY_RIGHT: nextColumn()
-			KEY_LEFT: prevColumn()
+			#KEY_RIGHT: nextColumn()
+			#KEY_LEFT: prevColumn()
 			KEY_SPACE: 
 				nextColumn()
 				_ignoreEvent()
-			KEY_ENTER: 
-				select_word_under_caret()
-				var sel = get_selected_text()
+			KEY_ENTER:
 				Log.warn("<ENTER> key is disabled in `TrackerEdit.gd`")
 				_ignoreEvent()
 			_:
@@ -76,7 +75,6 @@ func nextColumn():
 	var ln := get_line(get_caret_line())
 	var pos := ln.find(" ", get_caret_column())
 	set_caret_column(pos)
-	
 
 func prevColumn():
 	var ln := get_caret_line()
@@ -84,9 +82,3 @@ func prevColumn():
 	var pos := get_caret_column()
 	pos = lineText.rfind(" ", get_caret_column())
 	set_caret_column(pos)
-
-func moveUp():
-	set_caret_line(get_caret_line() - 1)
-
-func moveDown():
-	set_caret_line(get_caret_line() + 1)
