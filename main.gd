@@ -29,7 +29,7 @@ func _ready():
 	sequencer.wait_time = 0.25
 	add_child(sequencer)
 	sequencer.timeout.connect(_on_sequencer_timeout)
-	sequencer.start()
+	#sequencer.start()
 	
 	$VBoxContainer/Prompt.msg_evaluated.connect(_on_msg_evaluated)
 	#for step in stepsPerPhrase:

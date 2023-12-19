@@ -36,20 +36,24 @@ func _input(event):
 				var sel = get_selected_text()
 				Log.warn("<ENTER> key is disabled in `TrackerEdit.gd`")
 				_ignoreEvent()
+			_:
+				insertText(event.as_text())
+				_ignoreEvent()
 
 func _ignoreEvent():
 	# disable the event at the Window level, the hierarchy is (Window.Main.TextEdit.self)
 	get_parent().get_parent().get_parent().set_input_as_handled()
+
+func insertText(str: String):
+	var x = get_text()
+	remove_text(get_caret_line(), get_caret_column(), get_caret_line(), get_caret_column() + 1)
+	insert_text_at_caret(str)
 
 func moveRight():
 	var ln := get_caret_line()
 	var lineText := get_line(ln)
 	var pos := lineText.find(" ", get_caret_column())
 	set_caret_column(pos)
-	#select(ln, pos, ln, lineText.find(" ", pos))
-	#select_word_under_caret()
-	#var word = get_selected_text()
-	#pass
 	
 
 func moveLeft():
