@@ -37,6 +37,9 @@ func _input(event):
 		Mode.NORMAL: _normalModeInput(event)
 
 func _normalModeInput(event):
+	if Input.is_action_pressed("increment_number"):
+		incrementValue()
+		_ignoreEvent()
 	if event is InputEventKey and event.pressed:
 		#deselect()
 		match event.keycode:
@@ -61,12 +64,20 @@ func _ignoreEvent():
 	# disable the event at the Window level, the hierarchy is (Window.Main.TextEdit.self)
 	get_parent().get_parent().get_parent().set_input_as_handled()
 
+func _simulateKeyPress(key: Key):
+	Log.debug(key)
+	var ev = InputEventKey.new()
+	ev.keycode = key
+	_input(ev)
+
 func insertText(str: String):
+	# FIX: replace with start_action(ACTION_DELETE)?
 	var lnText = get_line(get_caret_line()).substr(get_caret_column())
 	if isEOC(): nextColumn()
 	if isEOL(): set_caret_column(get_caret_column() - 1)
 	remove_text(get_caret_line(), get_caret_column(), get_caret_line(), get_caret_column() + 1)
 	insert_text_at_caret(str)
+	set_caret_column(get_caret_column() - 1)
 
 ## Is end of column
 func isEOL() -> bool:
@@ -106,3 +117,12 @@ func selectSlot():
 	if next < 0: next = len(lnText)
 	Log.debug("%s (%s) %s - %s" % [prev, cl, next, lnText.find(" ")])
 	select(ln, prev, ln, next)
+
+func incrementValue():
+	var original = get_line(get_caret_line()).substr(get_caret_column(),1)
+	var value = original.hex_to_int()
+	var inc = value + 1
+	var hex = "%X" % inc
+	Log.debug("%s:%s %s:%s" % [original, value, inc, hex])
+	insert_text_at_caret(hex)
+	set_caret_column(get_caret_column() - 1)
