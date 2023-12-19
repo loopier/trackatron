@@ -13,6 +13,8 @@ Loosely based on the great Dirtwave's M8.
 - Arch device (SteamDeck)
 
 # Notes
+## TODO
+- add headers to columns
 ## commands
 command examples
 ### synth voice
