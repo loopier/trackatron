@@ -18,3 +18,4 @@ func test_voice():
 	var voice : Zyn.Voice = Zyn.Voice.new()
 	assert_eq(voice.amp.vol.getValue(), 64)
 	assert_eq(voice.amp.vol.getHex(), "40")
+	assert_eq(voice.amp.vol.getHex(), Hex.from(64).value)

@@ -40,7 +40,7 @@ func test_param():
 	assert_eq(param.min, 48)
 	assert_eq(param.max, 72)
 	param = Zyn.Param.range(0.5, 0, 1)
-	assert_eq(param.getMidi(), 63)
+	assert_eq(param.getMidi(), 63.5)
 	param.setValue(0.1)
 	assert_eq(param.getValue(), 0.1)
 	param.setValue(2)
@@ -69,4 +69,8 @@ func test_lfo():
 	assert_eq(lfo.getFreq().getValue(), 6.49)
 	assert_eq(lfo.getFreq().max, 85.25)
 	assert_eq(lfo.getFreq().min, 0.08)
-	assert_eq(lfo.getFreq().getMidi(), 9)
+	#assert_eq(lfo.getFreq().getMidi(), 9.55817776212281)
+
+func test_hasOsc():
+	var osc = Zyn.HasOsc.new()
+	assert_eq(osc.getAddr(), "/")

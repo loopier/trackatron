@@ -134,13 +134,33 @@ class Oscillator:
 	var shape := Param.newWith(0, 0, 127, "/shape")
 	var distor := Distortion.new()
 
-class Voice:
+class HasOsc:
+	var addr := "/"
+	var index = null
+	func getAddr() -> String:
+		return "%s%s" % [addr, index if index != null else ""]
+
+class Voice extends HasOsc:
 	var amp : VoiceAmp = VoiceAmp.new()
 	var freq : VoiceFreq = VoiceFreq.new()
 	var filter : Filter = Filter.new()
 	var env : Env = Env.new()
 	var lfo : LFO = LFO.new()
 	var oscillator : Oscillator = Oscillator.new()
+	
+	func _init(num: int = 0):
+		addr = "/VoicePar"
+		index = num
+
+class Part extends HasOsc:
+	const NUM_VOICES := 8
+	var voices : Array
+	
+	func _init(num: int = 0):
+		addr = "/part"
+		index = num
+		voices.resize(NUM_VOICES)
+		voices.fill(Voice.new())
 
 const numVoices := 8
 var voices := []
