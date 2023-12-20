@@ -1,90 +1,137 @@
 class_name Zyn
 
-const ENV_LIN := false
-const ENV_LOG := true
-const LFO_SINE := 0
-const LFO_TRI := 1
-const LFO_SQUARE := 2
-const LFO_UP := 3
-const LFO_DOWN := 4
-const LFO_EXP1 := 5
-const LFO_EXP2 := 6
+class Param:
+	var min: Variant = 0
+	var max: Variant = 127
+	var value: Variant = 0
+	var default: Variant = 0
+	var addr: String = "/"
+	
+	func _init(defaultValue: Variant = null):
+		if defaultValue == null: return
+		value = defaultValue
+		default = defaultValue
+	
+	static func newWith(defaultValue: Variant, min: Variant, max: Variant, oscAddr: String) -> Param:
+		var param = Param.new(defaultValue)
+		param.min = min
+		param.max = max
+		param.addr = "%s" % [oscAddr] if oscAddr.begins_with("/") else "/%s" % [oscAddr]
+		return param
+	
+	static func range(default: Variant, min: Variant, max: Variant) -> Param:
+		var param := Param.new(default)
+		param.min = min
+		param.max = max
+		return param
+	
+	func reset():
+		value = default
+		
+	func setValue(newValue: Variant):
+		value = min(max(newValue, min), max)
+	
+	func getValue() -> Variant:
+		# clip to range in case it was set with X.value = N
+		setValue(value)
+		return value
+	
+	func getHex() -> String:
+		return Hex.withDefault(value).value
+	
+	func getHexDigits() -> int:
+		return Hex.withDefault(value).value.length()
+	
+	func getMidi() -> float:
+		return ((value - min) / float(max - min) * (127 - 0) + 0)
+	
+	func getAddr() -> String:
+		return addr
 
 class LFO:
-	var freq := 6.49
-	var depth := 0
-	var lp := 127
-	var phase := 64
-	var stretch := 64
-	var delay := 0.0
-	var fadeIn := 0.0
-	var fadeOut := 10.0
-	var ampRand := 0
-	var freqRand := 0
+	enum { SINE, TRI, SQUARE, UP, DOWN, EXP1, EXP2}
+	var freq : Param = Param.new()
+	var depth := Param.new()
+	var lp := Param.newWith(127, 0, 127, "/lp")
+	var phase := Param.newWith(64, 0, 127, "/phase")
+	var stretch := Param.newWith(64, 0, 127, "/stretch")
+	var delay := Param.newWith(0.0, 0, 4, "/delay")
+	var fadeIn := Param.newWith(0.0, 0, 10.0, "/fadeIn")
+	var fadeOut := Param.newWith(10.0, 0, 10.0, "/fadeOut")
+	var ampRand := Param.newWith(0, 0, 127, "/ampRand")
+	var freqRand := Param.newWith(0, 0, 127, "/freqRand")
+	
+	func _init(value: Variant = 6.49, min: float = 0.08, max: float = 85.25):
+		freq = Param.range(value, min, max)
+	
+	func getFreq() -> Param:
+		return freq
+		
+	func setFreq(value: float):
+		freq.value = value
 
 class Env:
-	var atkt := 0.0
-	var atkl := 1.0
-	var dect := 0.13
-	var decl := 0.97
-	var sus := 127
-	var relt := 0.04
-	var stretch := 64
+	const LIN := false
+	const LOG := true
+	var atkt := Param.newWith(0.0, 0, 41, "/atkt")
+	var atkl := Param.newWith(1.0, 0, 1, "/atkl")
+	var dect := Param.newWith(0.13, 0, 41, "/dect")
+	var decl := Param.newWith(0.97, 0, 1, "/decl")
+	var sus := Param.newWith(127, 0, 127, "/sus")
+	var relt := Param.newWith(0.04, 0, 41, "/relt")
+	var stretch := Param.newWith(64, 0, 127, "/stretch")
 	var forcedRelease := true
-	var linlog := Zyn.ENV_LOG
+	var linlog := Env.LOG
 	var repeat := false
-	var shape := Zyn.LFO_SINE
+	var shape := LFO.SINE
 
 class Amp:
-	var vol := 64
-	var sense := 64
-	var pan := 64
-	var stretch := 64
-	var strength := 0
+	var vol := Param.newWith(64, 0, 127, "/vol")
+	var sense := Param.newWith(64, 0, 127, "/sense")
+	var pan := Param.newWith(64, 0, 127, "/pan")
+	var stretch := Param.newWith(64, 0, 127, "/stretch")
+	var strength := Param.newWith(0, 0, 127, "/strength")
 	var time := 60
 	var stereo := true
 	var randHarmonics := false
 
 class VoiceAmp extends Amp:
-	var delay := 0
+	var delay := Param.newWith(0, 0, 127, "/delay")
 	var bypassGlobalFilter := false
 	var resonanceEnabled := true
 
-	func _init():
-		sense = 127
-
 class Freq:
-	var fine := 0
-	var coarse := 0
-	var octave := 0
-	var bw := 0
-	var type := 0
+	var fine := Param.newWith(0, 0, 127, "/fine")
+	var coarse := Param.newWith(0, 0, 127, "/coarse")
+	var octave := Param.newWith(0, 0, 127, "/octave")
+	var bw := Param.newWith(0, 0, 127, "/bw")
+	var type := Param.newWith(0, 0, 127, "/type")
 
 class VoiceFreq extends Freq:
-	var equalTemperament := 0
-	var fixed := 0
+	var equalTemperament := Param.newWith(0, 0, 127, "/equalTemperament")
+	var fixed := Param.newWith(0, 0, 127, "/fixed")
 
 class Filter:
-	var cutoff := 30313.21
-	var q := 1.08
-	var freqTrack := 0.0
-	var scale := 0
-	var sense := 64
+	var cutoff := Param.newWith(30313.21, 31.25, 30313.21, "/cutoff")
+	var q := Param.newWith(1.08, 0, 1, "/q")
+	var freqTrack := Param.newWith(0.0, 0, 1, "/freqTrack")
+	var scale := Param.newWith(0, 0, 127, "/scale")
+	var sense := Param.newWith(64, 0, 127, "/sense")
 	var stages := 1
-	var category := 0
-	var type := 0
-	var gain := 0.0
+	var category := Param.newWith(0, 0, 127, "/category")
+	var type := Param.newWith(0, 0, 127, "/type")
+	var gain := Param.newWith(0.0, 0, 1, "/gain")
 
 	var env : Env
 	var lfo : LFO
 
 class Distortion:
-	var type := 0
-	var amt := 0
+	var type := Param.newWith(0, 0, 127, "/type")
+	var amt := Param.newWith(0, 0, 127, "/amt")
 
 class Oscillator:
-	var baseFunc := 0
-	var shape := 0
+	var baseFunc := Param.newWith(0, 0, 127, "/baseFunc")
+	var shape := Param.newWith(0, 0, 127, "/shape")
 	var distor := Distortion.new()
 
 class Voice:
