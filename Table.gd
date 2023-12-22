@@ -7,15 +7,22 @@ var colTemplate := []
 var colSeparator := ""
 
 class Cell:
-	var slots := 2
-	var contents := ""
+	var digits := 2
+	var value := ""
 
-	func _init(digits: int = -1):
-		slots = max(digits, slots)
+	func _init(minDigits: int = -1):
+		digits = max(minDigits, digits)
+
+	func getValue() -> String:
+		if value.length() <= 0: return getEmptyText()
+		return value
+	
+	func setValue(newValue: int):
+		value = "%0*X" % [digits, value]
 
 	func getEmptyText() -> String:
 		var str := ""
-		for i in slots: str += "-"
+		for i in digits: str += "-"
 		return str 
 
 func _init(rows: int = 2, cols: Variant = [], separator: String = " "):
@@ -54,3 +61,10 @@ func getEmptyText() -> String:
 			if cell < matrix[row].size() - 1: str += colSeparator
 		if row < matrix.size() - 1: str += "\n"
 	return str
+
+func setCell(value: int, row: int, col: int):
+	var cell = matrix[row][col]
+	matrix[row][col].setValue(value)
+
+func getCell(row: int, col: int) -> String:
+	return matrix[row][col].getValue()

@@ -16,15 +16,27 @@ func after_all():
 	gut.p("Runs once after all tests")
 
 func test_table():
-	var g = Table.new(2,3)
-	assert_eq(g.getEmptyText(), "-- -- --\n-- -- --")
-	g = Table.new(3, 2)
-	assert_eq(g.getEmptyText(), "-- --\n-- --\n-- --")
-	g = Table.new(2, [3, 2, 2])
-	assert_eq(g.getEmptyText(), "--- -- --\n--- -- --")
+	var t = Table.new(2,3)
+	assert_eq(t.getEmptyText(), "-- -- --\n-- -- --")
+	t = Table.new(3, 2)
+	assert_eq(t.getEmptyText(), "-- --\n-- --\n-- --")
+	t = Table.new(2, [3, 2, 2])
+	assert_eq(t.getEmptyText(), "--- -- --\n--- -- --")
 
 func test_cell():
 	var c = Cell.new()
 	assert_eq(c.getEmptyText(), "--")
 	c = Cell.new(3)
 	assert_eq(c.getEmptyText(), "---")
+
+func test_getCell():
+	var t = Table.new(2,[3, 2])
+	assert_eq(t.getCell(0,0), "---")
+	assert_eq(t.getCell(0,1), "--")
+
+func test_setCell():
+	var t = Table.new(2,[3,2])
+	t.setCell(0, 0, 0)
+	assert_eq(t.getCell(0,0), "000")
+	t.setCell(0, 1, 15)
+	assert_eq(t.getCell(0,0), "00F")

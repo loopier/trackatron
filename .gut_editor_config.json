@@ -24,7 +24,7 @@
  "paint_after": 0.1,
  "panel_options": {
   "font_name": "CourierPrime",
-  "font_size": 30,
+  "font_size": 12,
   "hide_output_text": false,
   "hide_result_tree": false,
   "hide_settings": false,
@@ -35,12 +35,12 @@
  "post_run_script": "",
  "pre_run_script": "",
  "prefix": "test_",
- "selected": null,
+ "selected": "test_table.gd",
  "should_exit": true,
  "should_exit_on_success": false,
  "should_maximize": false,
  "show_help": false,
  "suffix": ".gd",
  "tests": [],
- "unit_test_name": null
+ "unit_test_name": "test_setCell"
 }
