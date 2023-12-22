@@ -28,6 +28,13 @@ script = ExtResource("2_r8vxk")
 [node name="TableEdit" parent="VBoxContainer" instance=ExtResource("4_g07tv")]
 layout_mode = 2
 size_flags_vertical = 3
+rows = 1
+cols = [3, 2, 3, 3, 3, 3, 3, 3]
+
+[node name="TableEdit2" parent="VBoxContainer" instance=ExtResource("4_g07tv")]
+layout_mode = 2
+size_flags_vertical = 3
+delimiter_strings = Array[String](["\" \"", "' '"])
 cols = [3, 2, 3, 3, 3, 3, 3, 3, 3, 3]
 
 [node name="GutTest" type="Node" parent="."]
