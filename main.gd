@@ -32,10 +32,6 @@ func _ready():
 	#sequencer.start()
 	
 	$VBoxContainer/Prompt.msg_evaluated.connect(_on_msg_evaluated)
-	#for step in stepsPerPhrase:
-		#var stepEdit = StepEdit.new()
-		#stepEdit.name = "step%s" % step
-		#$VBoxContainer.add_child(stepEdit)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
